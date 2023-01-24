@@ -4,9 +4,10 @@
       container_name: snake-db
       image: mysql:latest
       restart: always
+      command: --init-file /data/application/init.sql
       volumes:
         - /opt/test:/var/lib/mysql
-        - ./mysql-dump:/docker-entrypoint-initdb.d
+        - ./init.sql:/data/application/init.sql
       environment:
         MYSQL_ROOT_PASSWORD: root
         MYSQL_DATABASE: snake
