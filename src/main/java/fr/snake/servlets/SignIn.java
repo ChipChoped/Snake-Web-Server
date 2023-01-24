@@ -1,6 +1,9 @@
 package fr.snake.servlets;
 
+import fr.snake.forms.SignInForm;
+
 import java.io.IOException;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -28,6 +31,9 @@ public class SignIn extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		if (request.getAttribute("firstAttempt") == null)
+			request.setAttribute("firstAttempt", true);
+		
 		this.getServletContext().getRequestDispatcher("/WEB-INF/sign-in.jsp").forward(request, response);
 	}
 
@@ -35,23 +41,23 @@ public class SignIn extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-	
+		SignInForm form = new SignInForm();
+		form.checkNewAccount(request);
 		
-		if (request.getParameter("email").equals(request.getParameter("email-rep")) &&
-		request.getParameter("password").equals(request.getParameter("password-rep"))) {
+		if (form.checkIfSignedIn()) {
+			User user = new User();
+			user.setUsername(request.getParameter("username"));
+			user.setEmail(request.getParameter("email"));
+			user.setAge(Integer.valueOf(request.getParameter("age")));
 			
-		User user = new User();
-		user.setUsername(request.getParameter("username"));
-		user.setEmail(request.getParameter("email"));
-		user.setAge(Integer.valueOf(request.getParameter("age")));
-		
-		request.setAttribute("user", user);
-		response.getWriter().append("???");
-
-		this.getServletContext().getRequestDispatcher("/WEB-INF/successfull-sign-in.jsp").forward(request, response);
+			request.setAttribute("user", user);
+	
+			this.getServletContext().getRequestDispatcher("/WEB-INF/successfull-sign-in.jsp").forward(request, response);
 		}
-		//else
-			//doGet(request, response);
+		else {
+			request.setAttribute("form", form);
+			request.setAttribute("firstAttempt", false);
+			doGet(request, response);
+		}
 	}
-
 }
