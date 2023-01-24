@@ -1,0 +1,42 @@
+  version: "3.9" #version of docker-compose
+  services:
+    snake-db:
+      container_name: snake-db
+      image: mysql:latest
+      restart: always
+      volumes:
+        - /opt/test:/var/lib/mysql
+        - ./mysql-dump:/docker-entrypoint-initdb.d
+      environment:
+        MYSQL_ROOT_PASSWORD: root
+        MYSQL_DATABASE: snake
+        MYSQL_USER: admin
+        MYSQL_PASSWORD: root
+      ports:
+        - "3306:3306"
+    db-visualizer:
+      container_name: snake-db-visualizer
+      image: phpmyadmin/phpmyadmin
+      restart: always
+      ports:
+        - "8081:80"
+      environment:
+        PMA_HOST: snake-db
+        MYSQL_ROOT_PASSWORD: root
+      depends_on: 
+        - snake-db
+    web:
+      container_name: snake-tomcat
+      depends_on:
+        - snake-db
+      image: tomcat:8.0
+      volumes:
+        - ./Snake.war:/usr/local/tomcat/webapps/Snake.war
+      restart: always
+      ports:
+        - "8080:8080"
+      environment:
+        MYSQL_ROOT_PASSWORD: root
+        MYSQL_DATABASE: snake
+        MYSQL_USER: admin
+        MYSQL_PASSWORD: root
