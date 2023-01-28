@@ -1,11 +1,10 @@
 package fr.snake.servlets;
 
+import fr.snake.db.UsersDB;
 import fr.snake.forms.SignInForm;
 
 import java.io.IOException;
 import java.time.LocalDate;
-import java.time.Period;
-
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -55,7 +54,8 @@ public class SignIn extends HttpServlet {
 			user.setSex(request.getParameter("sex"));
 			user.setEmail(request.getParameter("email"));
 			user.setPassword(request.getParameter("password"));
-			user.setAge(Period.between(LocalDate.parse(request.getParameter("birth-date")), LocalDate.now()).getYears());
+			user.setBirthDate(request.getParameter("birth-date"));
+			user.setInscriptionDate(String.valueOf(LocalDate.now()));
 			
 			request.setAttribute("user", user);
 	
