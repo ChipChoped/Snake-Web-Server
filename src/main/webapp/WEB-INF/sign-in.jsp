@@ -19,6 +19,10 @@
 		<c:if test="${ !form.validUsername && !firstAttempt }">
 			<label for="username"> Please enter a valid username (3-20 characters : letters, numbers and underscore) </label>
 		</c:if>
+		<c:if test="${ form.usernameTaken && !firstAttempt }">
+			<br/> <br/>
+			<label for="username"> This username is already taken </label>
+		</c:if>
 		<br/> <br/>
 
 		<label for="first-name"> First name </label>
@@ -56,6 +60,10 @@
 		<input type="email" id="email" name="email"/>
 		<c:if test="${ !form.validEmail && !firstAttempt }">
 			<label for="email"> Please enter a valid e-mail address </label>
+		</c:if>
+		<c:if test="${ form.emailTaken && !firstAttempt }">
+			<br/> <br/>
+			<label for="email"> This email is already taken </label>
 		</c:if>
 		<br/> <br/>
 		

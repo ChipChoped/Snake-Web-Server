@@ -5,9 +5,10 @@ public class User {
 	private String firstName;
 	private String lastName;
 	private String sex;
+	private String birthDate;
 	private String email;
 	private String password;
-	private int age;
+	private String inscriptionDate;
 	
 	public String getUsername() {
 		return username;
@@ -33,6 +34,12 @@ public class User {
 	public void setSex(String sex) {
 		this.sex = sex;
 	}
+	public String getBirthDate() {
+		return birthDate;
+	}
+	public void setBirthDate(String birthDate) {
+		this.birthDate = birthDate;
+	}
 	public String getEmail() {
 		return email;
 	}
@@ -45,10 +52,10 @@ public class User {
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	public int getAge() {
-		return age;
+	public String getInscriptionDate() {
+		return inscriptionDate;
 	}
-	public void setAge(int age) {
-		this.age = age;
+	public void setInscriptionDate(String inscriptionDate) {
+		this.inscriptionDate = inscriptionDate;
 	}
 }

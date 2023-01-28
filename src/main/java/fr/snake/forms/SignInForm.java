@@ -1,5 +1,7 @@
 package fr.snake.forms;
 
+import fr.snake.db.UsersDB;
+
 import java.time.LocalDate;
 import java.time.Period;
 import java.util.regex.Matcher;
@@ -17,6 +19,9 @@ public class SignInForm {
 	private boolean sameEmails;
 	private boolean validPassword;
 	private boolean samePasswords;
+
+	private boolean usernameTaken;
+	private boolean emailTaken;
 	
 	public void checkNewAccount(HttpServletRequest request) {
 		Pattern usernamePattern = Pattern.compile("\\w{3,20}");
@@ -39,18 +44,25 @@ public class SignInForm {
 		sameEmails = request.getParameter("email").equals(request.getParameter("email-rep"));
 		validPassword = request.getParameter("password").length() >= 8 && request.getParameter("password").length() <= 20;
 		samePasswords = request.getParameter("password").equals(request.getParameter("password-rep"));
+
+		UsersDB usersDB = new UsersDB();
+
+		usernameTaken = usersDB.isUsernameTaken(request.getParameter("username"));
+		emailTaken = usersDB.isEmailTaken(request.getParameter("email"));
 	}
 	
 	public boolean checkIfSignedIn() {
-		return validUsername && validFirstName && validLastName && validAge && checkedSex && validEmail && sameEmails && validPassword && samePasswords;
+		return validUsername && validFirstName && validLastName
+				&& validAge && checkedSex &&validEmail && sameEmails &&
+				validPassword && samePasswords && !usernameTaken && !emailTaken;
 	}
 
 	public boolean isValidUsername() {
 		return validUsername;
 	}
 
-	public void setValidUsername(boolean usernameEmpty) {
-		this.validUsername = usernameEmpty;
+	public void setValidUsername(boolean validUsername) {
+		this.validUsername = validUsername;
 	}
 
 	public boolean isValidFirstName() {
@@ -89,8 +101,8 @@ public class SignInForm {
 		return validEmail;
 	}
 
-	public void setValidEmail(boolean correctEmail) {
-		this.validEmail = correctEmail;
+	public void setValidEmail(boolean validEmail) {
+		this.validEmail = validEmail;
 	}
 
 	public boolean isSameEmails() {
@@ -115,5 +127,21 @@ public class SignInForm {
 
 	public void setSamePasswords(boolean samePasswords) {
 		this.samePasswords = samePasswords;
+	}
+
+	public boolean isUsernameTaken() {
+		return usernameTaken;
+	}
+
+	public void setUsernameTaken(boolean usernameTaken) {
+		this.usernameTaken = usernameTaken;
+	}
+
+	public boolean isEmailTaken() {
+		return emailTaken;
+	}
+
+	public void setEmailTaken(boolean emailTaken) {
+		this.emailTaken = emailTaken;
 	}
 }
