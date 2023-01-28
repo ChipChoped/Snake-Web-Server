@@ -44,7 +44,7 @@ public class SignIn extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		SignInForm form = new SignInForm();
 		form.checkNewAccount(request);
-		
+
 		if (form.checkIfSignedIn()) {
 			User user = new User();
 
@@ -56,9 +56,11 @@ public class SignIn extends HttpServlet {
 			user.setPassword(request.getParameter("password"));
 			user.setBirthDate(request.getParameter("birth-date"));
 			user.setInscriptionDate(String.valueOf(LocalDate.now()));
+
+			UsersDB usersDB = new UsersDB();
+			usersDB.addUser(user);
 			
 			request.setAttribute("user", user);
-	
 			this.getServletContext().getRequestDispatcher("/WEB-INF/successfull-sign-in.jsp").forward(request, response);
 		}
 		else {

@@ -76,12 +76,12 @@ public class UsersDB {
             PreparedStatement preparedStatement = connexion.prepareStatement("INSERT INTO users VALUES(?, ?, ?, ?, ?, ?, ?, ?);");
             preparedStatement.setString(1, user.getUsername());
             preparedStatement.setString(2, user.getFirstName());
-            preparedStatement.setString(2, user.getLastName());
-            preparedStatement.setString(2, user.getEmail());
-            preparedStatement.setString(2, user.getPassword());
-            preparedStatement.setString(2, user.getSex());
-            preparedStatement.setString(2, user.getBirthDate());
-            preparedStatement.setString(2, user.getInscriptionDate());
+            preparedStatement.setString(3, user.getLastName());
+            preparedStatement.setString(4, user.getEmail());
+            preparedStatement.setString(5, user.getPassword());
+            preparedStatement.setString(6, user.getSex());
+            preparedStatement.setString(7, user.getBirthDate());
+            preparedStatement.setString(8, user.getInscriptionDate());
 
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
