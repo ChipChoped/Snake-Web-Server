@@ -12,7 +12,7 @@
 
 <h1> New account form </h1>
 
-<form action="sign-in" method="POST" autocomplete="on">
+<form action="sign-up" method="POST" autocomplete="on">
 	<fieldset>
 		<label for="username"> Username </label>
 		<input type="text" id="username" name="username"/>

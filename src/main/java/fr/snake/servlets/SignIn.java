@@ -1,7 +1,7 @@
 package fr.snake.servlets;
 
 import fr.snake.db.UsersDB;
-import fr.snake.forms.SignInForm;
+import fr.snake.forms.SignUpForm;
 
 import java.io.IOException;
 import java.time.LocalDate;
@@ -16,7 +16,7 @@ import fr.snake.beans.User;
 /**
  * Servlet implementation class Inscription
  */
-@WebServlet("/sign-in")
+@WebServlet("/sign-up")
 public class SignIn extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -35,14 +35,14 @@ public class SignIn extends HttpServlet {
 		if (request.getAttribute("firstAttempt") == null)
 			request.setAttribute("firstAttempt", true);
 		
-		this.getServletContext().getRequestDispatcher("/WEB-INF/sign-in.jsp").forward(request, response);
+		this.getServletContext().getRequestDispatcher("/WEB-INF/sign-up.jsp").forward(request, response);
 	}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		SignInForm form = new SignInForm();
+		SignUpForm form = new SignUpForm();
 		form.checkNewAccount(request);
 
 		if (form.checkIfSignedIn()) {
@@ -61,7 +61,7 @@ public class SignIn extends HttpServlet {
 			usersDB.addUser(user);
 			
 			request.setAttribute("user", user);
-			this.getServletContext().getRequestDispatcher("/WEB-INF/successfull-sign-in.jsp").forward(request, response);
+			this.getServletContext().getRequestDispatcher("/WEB-INF/successfull-sign-up.jsp").forward(request, response);
 		}
 		else {
 			request.setAttribute("form", form);

@@ -9,7 +9,7 @@ import java.util.regex.Pattern;
 
 import javax.servlet.http.HttpServletRequest;
 
-public class SignInForm {
+public class SignUpForm {
 	private boolean validUsername;
 	private boolean validFirstName;
 	private boolean validLastName;
