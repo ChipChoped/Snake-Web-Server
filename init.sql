@@ -1,5 +1,5 @@
 DROP DATABASE IF EXISTS snake;
-CREATE DATABASE IF NOT EXISTS snake;
+CREATE DATABASE IF NOT EXISTS snake DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
 USE snake;
 
 CREATE TABLE users (
@@ -14,5 +14,5 @@ CREATE TABLE users (
 );
 
 INSERT INTO users VALUES
-('SuperSnake', 'John', 'Smith', 'john-smith@outlook.fr',
+('TheUnknownMan', 'John', 'Doe', 'john-doe@outlook.fr',
     '1234azerty', 'M', '1998-04-26', now())
