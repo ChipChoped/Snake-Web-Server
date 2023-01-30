@@ -29,7 +29,7 @@ public class SignUpForm {
 		Pattern namePattern = Pattern.compile("[A-ZÉÈÀÎÏÂË][a-zéèàêîïäë]{1,29}");
 		Matcher firstNameMatch = namePattern.matcher(request.getParameter("first-name"));
 		Matcher lastNameMatch = namePattern.matcher(request.getParameter("last-name"));
-		Pattern emailPattern = Pattern.compile("^\\w+([.birthDate-]?\\w+)*@\\w+([.-]?\\w+)*(\\.\\w{2,3})+$");
+		Pattern emailPattern = Pattern.compile("^\\w+([.-]?\\w+)*@\\w+([.-]?\\w+)*(\\.\\w{2,3})+$");
 		Matcher emailMatch = emailPattern.matcher(request.getParameter("email"));
 
 		LocalDate birthDate = !request.getParameter("birth-date").isEmpty() ? LocalDate.parse(request.getParameter("birth-date")) : null;
