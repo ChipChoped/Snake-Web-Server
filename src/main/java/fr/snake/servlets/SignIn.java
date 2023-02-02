@@ -1,5 +1,7 @@
 package fr.snake.servlets;
 
+import fr.snake.dao.DAOFactory;
+import fr.snake.dao.UserDAO;
 import fr.snake.db.UsersDB;
 import fr.snake.forms.SignUpForm;
 
@@ -19,12 +21,15 @@ import fr.snake.beans.User;
 @WebServlet("/sign-up")
 public class SignIn extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+	private UserDAO userDAO;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
     public SignIn() {
         super();
+		DAOFactory daoFactory = DAOFactory.getInstance();
+		userDAO = daoFactory.getUserDao();
         // TODO Auto-generated constructor stub
     }
 
@@ -57,8 +62,7 @@ public class SignIn extends HttpServlet {
 			user.setBirthDate(request.getParameter("birth-date"));
 			user.setInscriptionDate(String.valueOf(LocalDate.now()));
 
-			UsersDB usersDB = new UsersDB();
-			usersDB.addUser(user);
+			userDAO.add(user);
 			
 			request.setAttribute("user", user);
 			this.getServletContext().getRequestDispatcher("/WEB-INF/successfull-sign-up.jsp").forward(request, response);

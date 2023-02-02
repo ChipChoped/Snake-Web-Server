@@ -1,6 +1,7 @@
 package fr.snake.forms;
 
-import fr.snake.db.UsersDB;
+import fr.snake.dao.DAOFactory;
+import fr.snake.dao.UserDAO;
 
 import java.time.LocalDate;
 import java.time.Period;
@@ -22,6 +23,8 @@ public class SignUpForm {
 
 	private boolean usernameTaken;
 	private boolean emailTaken;
+
+	private UserDAO userDAO;
 	
 	public void checkNewAccount(HttpServletRequest request) {
 		Pattern usernamePattern = Pattern.compile("\\w{3,20}");
@@ -45,10 +48,11 @@ public class SignUpForm {
 		validPassword = request.getParameter("password").length() >= 8 && request.getParameter("password").length() <= 20;
 		samePasswords = request.getParameter("password").equals(request.getParameter("password-rep"));
 
-		UsersDB usersDB = new UsersDB();
+		DAOFactory daoFactory = DAOFactory.getInstance();
+		userDAO = daoFactory.getUserDao();
 
-		usernameTaken = usersDB.isUsernameTaken(request.getParameter("username"));
-		emailTaken = usersDB.isEmailTaken(request.getParameter("email"));
+		usernameTaken = userDAO.isUsernameTaken(request.getParameter("username"));
+		emailTaken = userDAO.isEmailTaken(request.getParameter("email"));
 	}
 	
 	public boolean checkIfSignedIn() {
