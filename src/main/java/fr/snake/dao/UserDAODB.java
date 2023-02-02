@@ -7,14 +7,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class UserDAODB implements UserDAO {
-    private DAOFactory daoFactory;
+    private final DAOFactory daoFactory;
 
     UserDAODB(DAOFactory daoFactory) {
         this.daoFactory = daoFactory;
     }
 
     @Override
-    public void add(User user) {
+    public void add(User user) throws DAOException {
         Connection connexion = null;
         PreparedStatement preparedStatement = null;
 
@@ -32,13 +32,27 @@ public class UserDAODB implements UserDAO {
 
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
-            e.printStackTrace();
+            try {
+                if (connexion != null) {
+                    connexion.rollback();
+                }
+            } catch (SQLException ignored) {
+            }
+            throw new DAOException("Impossible de communiquer avec la base de données");
         }
-
+        finally {
+            try {
+                if (connexion != null) {
+                    connexion.close();
+                }
+            } catch (SQLException e) {
+                throw new DAOException("Impossible de communiquer avec la base de données");
+            }
+        }
     }
 
     @Override
-    public List<User> getAll() {
+    public List<User> getAll() throws DAOException {
         List<User> users = new ArrayList<User>();
         Connection connexion = null;
         Statement statement = null;
@@ -64,19 +78,36 @@ public class UserDAODB implements UserDAO {
                 users.add(user);
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            try {
+                if (connexion != null) {
+                    connexion.rollback();
+                }
+            } catch (SQLException ignored) {
+            }
+            throw new DAOException("Impossible de communiquer avec la base de données");
         }
+        finally {
+            try {
+                if (connexion != null) {
+                    connexion.close();
+                }
+            } catch (SQLException e) {
+                throw new DAOException("Impossible de communiquer avec la base de données");
+            }
+        }
+
         return users;
     }
 
     @Override
-    public boolean isUsernameTaken(String username) {
+    public boolean isUsernameTaken(String username) throws DAOException {
         Connection connexion = null;
         Statement statement = null;
         ResultSet result = null;
         int count = 0;
 
         try {
+            connexion = daoFactory.getConnection();
             statement = connexion.createStatement();
             result = statement.executeQuery("SELECT COUNT(*) FROM users WHERE username = '" + username + "';");
 
@@ -85,20 +116,34 @@ public class UserDAODB implements UserDAO {
                 count = result.getInt(1);
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            try {
+                connexion.rollback();
+            } catch (SQLException ignored) {
+            }
+            throw new DAOException("Impossible de communiquer avec la base de données");
+        }
+        finally {
+            try {
+                if (connexion != null) {
+                    connexion.close();
+                }
+            } catch (SQLException e) {
+                throw new DAOException("Impossible de communiquer avec la base de données");
+            }
         }
 
         return count >= 1;
     }
 
     @Override
-    public boolean isEmailTaken(String email) {
+    public boolean isEmailTaken(String email) throws DAOException {
         Connection connexion = null;
         Statement statement = null;
         ResultSet result = null;
         int count = 0;
 
         try {
+            connexion = daoFactory.getConnection();
             statement = connexion.createStatement();
 
             // Exécution de la requête
@@ -109,7 +154,20 @@ public class UserDAODB implements UserDAO {
                 count = result.getInt(1);
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            try {
+                connexion.rollback();
+            } catch (SQLException ignored) {
+            }
+            throw new DAOException("Impossible de communiquer avec la base de données");
+        }
+        finally {
+            try {
+                if (connexion != null) {
+                    connexion.close();
+                }
+            } catch (SQLException e) {
+                throw new DAOException("Impossible de communiquer avec la base de données");
+            }
         }
 
         return count >= 1;

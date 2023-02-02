@@ -1,5 +1,6 @@
 package fr.snake.forms;
 
+import fr.snake.dao.DAOException;
 import fr.snake.dao.DAOFactory;
 import fr.snake.dao.UserDAO;
 
@@ -26,7 +27,7 @@ public class SignUpForm {
 
 	private UserDAO userDAO;
 	
-	public void checkNewAccount(HttpServletRequest request) {
+	public void checkNewAccount(HttpServletRequest request) throws DAOException {
 		Pattern usernamePattern = Pattern.compile("\\w{3,20}");
 		Matcher usernameMatch = usernamePattern.matcher(request.getParameter("username"));
 		Pattern namePattern = Pattern.compile("[A-ZÉÈÀÎÏÂË][a-zéèàêîïäë]{1,29}");

@@ -1,8 +1,8 @@
 package fr.snake.servlets;
 
+import fr.snake.dao.DAOException;
 import fr.snake.dao.DAOFactory;
 import fr.snake.dao.UserDAO;
-import fr.snake.db.UsersDB;
 import fr.snake.forms.SignUpForm;
 
 import java.io.IOException;
@@ -48,7 +48,12 @@ public class SignIn extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		SignUpForm form = new SignUpForm();
-		form.checkNewAccount(request);
+
+		try {
+			form.checkNewAccount(request);
+		} catch (DAOException e) {
+			request.setAttribute("error", e.getMessage());
+		}
 
 		if (form.checkIfSignedIn()) {
 			User user = new User();
@@ -62,8 +67,12 @@ public class SignIn extends HttpServlet {
 			user.setBirthDate(request.getParameter("birth-date"));
 			user.setInscriptionDate(String.valueOf(LocalDate.now()));
 
-			userDAO.add(user);
-			
+			try {
+				userDAO.add(user);
+			} catch (DAOException e) {
+				request.setAttribute("error", e.getMessage());
+			}
+
 			request.setAttribute("user", user);
 			this.getServletContext().getRequestDispatcher("/WEB-INF/successfull-sign-up.jsp").forward(request, response);
 		}
