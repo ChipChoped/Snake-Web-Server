@@ -19,14 +19,14 @@ import fr.snake.beans.User;
  * Servlet implementation class Inscription
  */
 @WebServlet("/sign-up")
-public class SignIn extends HttpServlet {
+public class SignUp extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private UserDAO userDAO;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public SignIn() {
+    public SignUp() {
         super();
 		DAOFactory daoFactory = DAOFactory.getInstance();
 		userDAO = daoFactory.getUserDao();
