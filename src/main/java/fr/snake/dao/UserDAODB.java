@@ -117,7 +117,9 @@ public class UserDAODB implements UserDAO {
             }
         } catch (SQLException e) {
             try {
-                connexion.rollback();
+                if (connexion != null) {
+                    connexion.rollback();
+                }
             } catch (SQLException ignored) {
             }
             throw new DAOException("Impossible de communiquer avec la base de données");
@@ -155,7 +157,9 @@ public class UserDAODB implements UserDAO {
             }
         } catch (SQLException e) {
             try {
-                connexion.rollback();
+                if (connexion != null) {
+                    connexion.rollback();
+                }
             } catch (SQLException ignored) {
             }
             throw new DAOException("Impossible de communiquer avec la base de données");
