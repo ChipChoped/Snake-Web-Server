@@ -1,12 +1,7 @@
 package fr.snake.servlets;
 
-import fr.snake.beans.BeanException;
-import fr.snake.dao.DAOException;
-import fr.snake.forms.LogInForm;
-
 import java.io.IOException;
 import javax.servlet.ServletException;
-import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -14,16 +9,16 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 /**
- * Servlet implementation class LogIn
+ * Servlet implementation class LogOut
  */
-@WebServlet("/log-in")
-public class LogIn extends HttpServlet {
+@WebServlet("/log-out")
+public class LogOut extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public LogIn() {
+    public LogOut() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -32,27 +27,19 @@ public class LogIn extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		this.getServletContext().getRequestDispatcher("/WEB-INF/log-in.jsp").forward(request, response);
+		HttpSession session = request.getSession();
+		session.removeAttribute("user");
+		session.invalidate();
+
+		this.getServletContext().getRequestDispatcher("/WEB-INF/log-out.jsp").forward(request, response);
 	}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		LogInForm form = new LogInForm();
-
-		try {
-			form.checkIfLoggedIn(request);
-
-			HttpSession session = request.getSession();
-			session.setAttribute("user", form.getUser());
-
-			this.getServletContext().getRequestDispatcher("/WEB-INF/home.jsp").forward(request, response);
-		} catch (BeanException | DAOException e) {
-			request.setAttribute("error", e.getMessage());
-		}
-
+		// TODO Auto-generated method stub
 		doGet(request, response);
 	}
+
 }
