@@ -4,8 +4,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
-<title>Sign In</title>
+    <meta charset="UTF-8">
+    <title> Sign In </title>
 </head>
 <body>
 <%@ include file="menu.jsp" %>
