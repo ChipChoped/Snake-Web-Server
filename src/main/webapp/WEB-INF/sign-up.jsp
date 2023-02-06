@@ -12,7 +12,7 @@
 
 <h1> New account form </h1>
 
-<form action="sign-up" method="POST" autocomplete="on">
+<form action="sign-up" method="POST" autocomplete="on" enctype="multipart/form-data">
 	<fieldset>
 		<label for="username"> Username </label>
 		<input type="text" id="username" name="username"/>
@@ -86,6 +86,10 @@
 		<c:if test="${ !form.samePasswords && !firstAttempt }">
 			<label for="password-rep"> Please enter the same password </label>
 		</c:if>
+		<br/> <br/>
+
+		<label for="profil-picture"> Profile picture </label>
+		<input type="file" id="profil-picture" name="profile-picture">
 		<br/> <br/>
 		
 		<button type="submit"> Create account </button>
