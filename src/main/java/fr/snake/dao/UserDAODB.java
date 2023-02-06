@@ -100,6 +100,52 @@ public class UserDAODB implements UserDAO {
     }
 
     @Override
+    public User getUserLoggedIn(String username, String password) throws DAOException {
+        Connection connexion = null;
+        Statement statement = null;
+        ResultSet result = null;
+        User user = null;
+
+        try {
+            connexion = daoFactory.getConnection();
+            statement = connexion.createStatement();
+            result = statement.executeQuery(
+                    "SELECT * FROM users WHERE username = '" + username + "' and password = '" + password + "';");
+
+            while (result.next()) {
+                user = new User();
+                user.setUsername(result.getString("username"));
+                user.setFirstName(result.getString("first_name"));
+                user.setLastName(result.getString("last_name"));
+                user.setEmail(result.getString("email"));
+                user.setPassword(result.getString("password"));
+                user.setSex(result.getString("sex"));
+                user.setBirthDate(result.getString("birth_date"));
+                user.setInscriptionDate(result.getString("inscription_date"));
+            }
+        } catch (SQLException e) {
+            try {
+                if (connexion != null) {
+                    connexion.rollback();
+                }
+            } catch (SQLException ignored) {
+            }
+            throw new DAOException("Impossible de communiquer avec la base de données");
+        }
+            finally {
+            try {
+                if (connexion != null) {
+                    connexion.close();
+                }
+            } catch (SQLException e) {
+                throw new DAOException("Impossible de communiquer avec la base de données");
+            }
+        }
+
+        return user;
+    }
+
+    @Override
     public boolean isUsernameTaken(String username) throws DAOException {
         Connection connexion = null;
         Statement statement = null;
