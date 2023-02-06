@@ -3,7 +3,7 @@ CREATE DATABASE IF NOT EXISTS snake DEFAULT CHARACTER SET utf8 COLLATE utf8_gene
 USE snake;
 
 CREATE TABLE users (
-    username VARCHAR(20),
+    username VARCHAR(20) PRIMARY KEY,
     first_name VARCHAR(30),
     last_name VARCHAR(30),
     email VARCHAR(50),
