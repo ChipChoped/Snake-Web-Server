@@ -100,28 +100,20 @@ public class UserDAODB implements UserDAO {
     }
 
     @Override
-    public User getUserLoggedIn(String username, String password) throws DAOException {
+    public boolean doLoginsExist(String username, String password) throws DAOException {
         Connection connexion = null;
         Statement statement = null;
         ResultSet result = null;
-        User user = null;
+        boolean userExist = false;
 
         try {
             connexion = daoFactory.getConnection();
             statement = connexion.createStatement();
             result = statement.executeQuery(
-                    "SELECT * FROM users WHERE username = '" + username + "' and password = '" + password + "';");
+                    "SELECT COUNT(*) FROM users WHERE username = '" + username + "' and password = '" + password + "';");
 
             while (result.next()) {
-                user = new User();
-                user.setUsername(result.getString("username"));
-                user.setFirstName(result.getString("first_name"));
-                user.setLastName(result.getString("last_name"));
-                user.setEmail(result.getString("email"));
-                user.setPassword(result.getString("password"));
-                user.setSex(result.getString("sex"));
-                user.setBirthDate(result.getString("birth_date"));
-                user.setInscriptionDate(result.getString("inscription_date"));
+                userExist = result.getInt(1) > 0;
             }
         } catch (SQLException e) {
             try {
@@ -132,7 +124,7 @@ public class UserDAODB implements UserDAO {
             }
             throw new DAOException("Impossible de communiquer avec la base de données");
         }
-            finally {
+        finally {
             try {
                 if (connexion != null) {
                     connexion.close();
@@ -142,7 +134,7 @@ public class UserDAODB implements UserDAO {
             }
         }
 
-        return user;
+        return userExist;
     }
 
     @Override

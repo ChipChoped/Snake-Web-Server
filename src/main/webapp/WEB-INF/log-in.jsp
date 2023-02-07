@@ -27,6 +27,10 @@
         <input type="password" id="password" name="password">
         <br/><br/>
 
+        <input type="checkbox" id="remember-me" name="remember-me" value="remember-me"/>
+        <label for="remember-me"> Stay logged in </label>
+        <br/><br/>
+
         <button type="submit"> Log in </button>
     </fieldset>
 </form>

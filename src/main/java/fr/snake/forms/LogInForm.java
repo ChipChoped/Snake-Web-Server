@@ -1,7 +1,6 @@
 package fr.snake.forms;
 
 import fr.snake.beans.BeanException;
-import fr.snake.beans.User;
 import fr.snake.dao.DAOException;
 import fr.snake.dao.DAOFactory;
 import fr.snake.dao.UserDAO;
@@ -9,23 +8,23 @@ import fr.snake.dao.UserDAO;
 import javax.servlet.http.HttpServletRequest;
 
 public class LogInForm {
-    private User user;
+    private boolean loginsExist;
 
     public void checkIfLoggedIn(HttpServletRequest request) throws BeanException, DAOException {
         DAOFactory daoFactory = DAOFactory.getInstance();
         UserDAO userDAO = daoFactory.getUserDao();
-        user = userDAO.getUserLoggedIn(request.getParameter("username"),
+        loginsExist = userDAO.doLoginsExist(request.getParameter("username"),
                 request.getParameter("password"));
 
-        if (user == null)
+        if (!loginsExist)
             throw new BeanException("Username or password is wrong");
     }
 
-    public User getUser() {
-        return user;
+    public boolean isLoginsExist() {
+        return loginsExist;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setLoginsExist(boolean loginsExist) {
+        this.loginsExist = loginsExist;
     }
 }

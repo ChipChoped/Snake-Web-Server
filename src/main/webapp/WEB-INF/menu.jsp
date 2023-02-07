@@ -6,7 +6,7 @@
         <th><a href="/Snake/"> Home </a></th>
 
         <c:choose>
-            <c:when test="${ !empty sessionScope.user }">
+            <c:when test="${ !empty sessionScope.username or !empty cookie.username}">
                 <th><a href="log-out"> Log out </a></th>
                 <th><a href="profil"> Profil </a></th>
             </c:when>

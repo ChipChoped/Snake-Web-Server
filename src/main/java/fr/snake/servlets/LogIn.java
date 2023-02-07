@@ -8,10 +8,7 @@ import java.io.IOException;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
+import javax.servlet.http.*;
 
 /**
  * Servlet implementation class LogIn
@@ -45,8 +42,15 @@ public class LogIn extends HttpServlet {
 		try {
 			form.checkIfLoggedIn(request);
 
-			HttpSession session = request.getSession();
-			session.setAttribute("user", form.getUser());
+			if (request.getParameter("remember-me") != null) {
+				Cookie cookie = new Cookie("username", request.getParameter("username"));
+				cookie.setMaxAge(60 * 60 * 24 * 30);
+				response.addCookie(cookie);
+			}
+			else {
+				HttpSession session = request.getSession();
+				session.setAttribute("username", request.getParameter("username"));
+			}
 
 			this.getServletContext().getRequestDispatcher("/WEB-INF/home.jsp").forward(request, response);
 		} catch (BeanException | DAOException e) {
