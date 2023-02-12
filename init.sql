@@ -9,10 +9,11 @@ CREATE TABLE users (
     email VARCHAR(50),
     password VARCHAR(20),
     sex ENUM('M', 'F'),
+    victories INTEGER,
     birth_date DATE,
     inscription_date DATE
 );
 
 INSERT INTO users VALUES
 ('TheUnknownMan', 'John', 'Doe', 'john-doe@outlook.fr',
-    '1234azerty', 'M', '1998-04-26', now())
+    '1234azerty', 'M', 7, '1998-04-26', now())

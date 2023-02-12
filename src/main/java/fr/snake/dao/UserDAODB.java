@@ -21,6 +21,7 @@ public class UserDAODB implements UserDAO {
         user.setEmail(result.getString("email"));
         user.setPassword(result.getString("password"));
         user.setSex(result.getString("sex"));
+        user.setVictories(result.getInt("victories"));
         user.setBirthDate(result.getString("birth_date"));
         user.setInscriptionDate(result.getString("inscription_date"));
     }
@@ -32,8 +33,9 @@ public class UserDAODB implements UserDAO {
         preparedStatement.setString(4, user.getEmail());
         preparedStatement.setString(5, user.getPassword());
         preparedStatement.setString(6, user.getSex());
-        preparedStatement.setString(7, user.getBirthDate());
-        preparedStatement.setString(8, user.getInscriptionDate());
+        preparedStatement.setString(7, Integer.toString(user.getVictories()));
+        preparedStatement.setString(8, user.getBirthDate());
+        preparedStatement.setString(9, user.getInscriptionDate());
 
         preparedStatement.executeUpdate();
     }
@@ -41,11 +43,11 @@ public class UserDAODB implements UserDAO {
     @Override
     public void addUser(User user) throws DAOException {
         Connection connexion = null;
-        PreparedStatement preparedStatement = null;
+        PreparedStatement preparedStatement;
 
         try {
             connexion = daoFactory.getConnection();
-            preparedStatement = connexion.prepareStatement("INSERT INTO users VALUES(?, ?, ?, ?, ?, ?, ?, ?);");
+            preparedStatement = connexion.prepareStatement("INSERT INTO users VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?);");
             setPreparedStatement(user, preparedStatement);
         } catch (SQLException e) {
             try {

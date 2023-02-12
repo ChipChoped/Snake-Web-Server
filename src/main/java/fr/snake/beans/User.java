@@ -9,6 +9,7 @@ public class User {
 	private String email;
 	private String password;
 	private String inscriptionDate;
+	private int victories;
 	
 	public String getUsername() {
 		return username;
@@ -57,5 +58,11 @@ public class User {
 	}
 	public void setInscriptionDate(String inscriptionDate) {
 		this.inscriptionDate = inscriptionDate;
+	}
+	public int getVictories() {
+		return victories;
+	}
+	public void setVictories(int victories) {
+		this.victories = victories;
 	}
 }

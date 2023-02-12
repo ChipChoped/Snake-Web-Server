@@ -76,8 +76,9 @@ public class SignUp extends HttpServlet {
 			user.setPassword(request.getParameter("password"));
 			user.setBirthDate(request.getParameter("birth-date"));
 			user.setInscriptionDate(String.valueOf(LocalDate.now()));
+			user.setVictories(0);
 
-			Part part = request.getPart("profile-picture");
+			Part part = request.getPart("profil-picture");
 			String fileName = getFileName(part);
 
 			if (fileName != null && !fileName.isEmpty())
@@ -87,6 +88,7 @@ public class SignUp extends HttpServlet {
 				userDAO.addUser(user);
 			} catch (DAOException e) {
 				request.setAttribute("error", e.getMessage());
+				this.getServletContext().getRequestDispatcher("/WEB-INF/page-not-found.jsp").forward(request, response);
 			}
 
 			request.setAttribute("user", user);

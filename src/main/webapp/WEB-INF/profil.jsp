@@ -20,6 +20,7 @@
     <div>
         <h1> ${ user.username } </h1>
         <h2> ${ user.firstName } ${ user.lastName }</h2>
+        <h3> Won ${ user.victories } game(s) </h3>
         <h3> Member since ${ user.inscriptionDate } </h3>
     </div>
 </div>

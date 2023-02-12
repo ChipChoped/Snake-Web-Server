@@ -89,7 +89,7 @@
 		<br/> <br/>
 
 		<label for="profil-picture"> Profile picture </label>
-		<input type="file" id="profil-picture" name="profile-picture">
+		<input type="file" id="profil-picture" name="profil-picture">
 		<br/> <br/>
 		
 		<button type="submit"> Create account </button>
