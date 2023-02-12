@@ -6,13 +6,7 @@ import fr.snake.dao.DAOException;
 import fr.snake.dao.DAOFactory;
 import fr.snake.dao.UserDAO;
 
-import java.io.File;
-import java.io.FilenameFilter;
 import java.io.IOException;
-import java.net.URLDecoder;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -23,14 +17,14 @@ import javax.servlet.http.HttpServletResponse;
  * Servlet implementation class Profil
  */
 @WebServlet("/user/*")
-public class Profil extends HttpServlet {
+public class Profile extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private final UserDAO userDAO;
 
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public Profil() {
+    public Profile() {
         super();
 		DAOFactory daoFactory = DAOFactory.getInstance();
 		userDAO = daoFactory.getUserDao();
@@ -103,7 +97,7 @@ public class Profil extends HttpServlet {
 
 		request.setAttribute("imagePath", path + "profil_pictures/" + username + ".jpg");*/
 
-		this.getServletContext().getRequestDispatcher("/WEB-INF/profil.jsp").forward(request, response);
+		this.getServletContext().getRequestDispatcher("/WEB-INF/profile.jsp").forward(request, response);
 	}
 
 	/**

@@ -8,14 +8,14 @@
     <meta charset="UTF-8">
     <title> Log In </title>
 </head>
-<link rel="stylesheet" type="text/css" href="../ressources/css/profil.css">
+<link rel="stylesheet" type="text/css" href="../ressources/css/profile.css">
 <body>
 <%@ include file="menu.jsp" %>
 
-<div class="profil-card">
+<div class="profile-card">
     <!--
     <span> ${ pageContext.request.contextPath } </span>
-    <img class="profil-picture" src="${ pageContext.request.contextPath }/image/ChipChop.jpg" alt="Profil picture"/>
+    <img class="profile-picture" src="${ pageContext.request.contextPath }/image/ChipChop.jpg" alt="Profile picture"/>
     -->
     <div>
         <h1> ${ user.username } </h1>
@@ -23,6 +23,10 @@
         <h3> Won ${ user.victories } game(s) </h3>
         <h3> Member since ${ user.inscriptionDate } </h3>
     </div>
+
+    <c:if test="${ !empty sessionScope.username or !empty cookie.username}">
+        <button> <a href="settings/profile"></a> </button>
+    </c:if>
 </div>
 </body>
 </html>
