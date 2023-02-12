@@ -6,8 +6,8 @@ import fr.snake.dao.UserDAO;
 import fr.snake.forms.SignUpForm;
 
 import java.io.*;
-import java.nio.file.Paths;
 import java.time.LocalDate;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
@@ -30,12 +30,7 @@ import fr.snake.beans.User;
 public class SignUp extends HttpServlet {
 	@Serial
 	private static final long serialVersionUID = 1L;
-
 	public static final int BUFFER_SIZE = 10240;
-	// Chemin à modifier
-	// Le dossier .snake doit déjà exister
-	public static final String FILE_PATH = "C:\\Users\\chaim\\.snake\\";
-
 	private final UserDAO userDAO;
 
     /**
@@ -89,7 +84,7 @@ public class SignUp extends HttpServlet {
 				saveFile(part, user.getUsername());
 
 			try {
-				userDAO.add(user);
+				userDAO.addUser(user);
 			} catch (DAOException e) {
 				request.setAttribute("error", e.getMessage());
 			}
@@ -113,8 +108,12 @@ public class SignUp extends HttpServlet {
 	}
 
 	private void saveFile(Part part, String fileName) throws IOException {
+		ServletContext context = this.getServletContext();
+		String FILE_PATH = context.getInitParameter("path") + "profil_pictures/";
+
+
 		try (BufferedInputStream input = new BufferedInputStream(part.getInputStream(), BUFFER_SIZE);
-			 BufferedOutputStream output = new BufferedOutputStream(new FileOutputStream(new File(SignUp.FILE_PATH, fileName + ".jpg")), BUFFER_SIZE)) {
+			 BufferedOutputStream output = new BufferedOutputStream(new FileOutputStream(new File(FILE_PATH, fileName + ".jpg")), BUFFER_SIZE)) {
 
 			byte[] buffer = new byte[BUFFER_SIZE];
 			int length;

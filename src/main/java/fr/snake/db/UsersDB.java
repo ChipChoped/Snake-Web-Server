@@ -1,6 +1,7 @@
 package fr.snake.db;
 
 import fr.snake.beans.User;
+import fr.snake.dao.UserDAODB;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -41,14 +42,7 @@ public class UsersDB {
             while (result.next()) {
                 User user = new User();
 
-                user.setUsername(result.getString("username"));
-                user.setFirstName(result.getString("first_name"));
-                user.setLastName(result.getString("last_name"));
-                user.setEmail(result.getString("email"));
-                user.setPassword(result.getString("password"));
-                user.setSex(result.getString("sex"));
-                user.setBirthDate(result.getString("birth_date"));
-                user.setInscriptionDate(result.getString("inscription_date"));
+                UserDAODB.setUser(user, result);
 
                 users.add(user);
             }
@@ -74,16 +68,7 @@ public class UsersDB {
 
         try {
             PreparedStatement preparedStatement = connexion.prepareStatement("INSERT INTO users VALUES(?, ?, ?, ?, ?, ?, ?, ?);");
-            preparedStatement.setString(1, user.getUsername());
-            preparedStatement.setString(2, user.getFirstName());
-            preparedStatement.setString(3, user.getLastName());
-            preparedStatement.setString(4, user.getEmail());
-            preparedStatement.setString(5, user.getPassword());
-            preparedStatement.setString(6, user.getSex());
-            preparedStatement.setString(7, user.getBirthDate());
-            preparedStatement.setString(8, user.getInscriptionDate());
-
-            preparedStatement.executeUpdate();
+            UserDAODB.setPreparedStatement(user, preparedStatement);
         } catch (SQLException e) {
             e.printStackTrace();
         }
