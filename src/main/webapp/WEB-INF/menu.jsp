@@ -8,7 +8,7 @@
         <c:choose>
             <c:when test="${ !empty sessionScope.username or !empty cookie.username}">
                 <th><a href="log-out"> Log out </a></th>
-                <th><a href="user"> Profil </a></th>
+                <th><a href="user"> Profile </a></th>
             </c:when>
             <c:otherwise>
                 <th><a href="sign-up"> Sign up </a></th>
