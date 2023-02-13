@@ -7,7 +7,9 @@ import fr.snake.beans.User;
 
 public interface UserDAO {
     void addUser(User user) throws DAOException;
+    User getUser(int id) throws DAOException, BeanException;
     User getUser(String username) throws DAOException, BeanException;
+    int getID(String username) throws DAOException, BeanException;
     List<User> getAll() throws DAOException;
     boolean doLoginsExist(String username, String password) throws DAOException;
     boolean isUsernameTaken(String username) throws DAOException;

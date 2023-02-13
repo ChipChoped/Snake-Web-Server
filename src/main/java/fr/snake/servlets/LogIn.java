@@ -2,9 +2,12 @@ package fr.snake.servlets;
 
 import fr.snake.beans.BeanException;
 import fr.snake.dao.DAOException;
+import fr.snake.dao.DAOFactory;
+import fr.snake.dao.UserDAO;
 import fr.snake.forms.LogInForm;
 
 import java.io.IOException;
+import java.io.Serial;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
@@ -15,13 +18,17 @@ import javax.servlet.http.*;
  */
 @WebServlet("/log-in")
 public class LogIn extends HttpServlet {
+	@Serial
 	private static final long serialVersionUID = 1L;
+	private final UserDAO userDAO;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
     public LogIn() {
         super();
+		DAOFactory daoFactory = DAOFactory.getInstance();
+		userDAO = daoFactory.getUserDao();
         // TODO Auto-generated constructor stub
     }
 
@@ -43,13 +50,13 @@ public class LogIn extends HttpServlet {
 			form.checkIfLoggedIn(request);
 
 			if (request.getParameter("remember-me") != null) {
-				Cookie cookie = new Cookie("username", request.getParameter("username"));
+				Cookie cookie = new Cookie("userID", Integer.toString(userDAO.getID(request.getParameter("username"))));
 				cookie.setMaxAge(60 * 60 * 24 * 30);
 				response.addCookie(cookie);
 			}
 			else {
 				HttpSession session = request.getSession();
-				session.setAttribute("username", request.getParameter("username"));
+				session.setAttribute("userID", Integer.toString(userDAO.getID(request.getParameter("username"))));
 			}
 
 			this.getServletContext().getRequestDispatcher("/WEB-INF/home.jsp").forward(request, response);

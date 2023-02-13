@@ -3,16 +3,16 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <table>
     <tr>
-        <th><a href="home"> Home </a></th>
+        <th><a href="/Snake/home"> Home </a></th>
 
         <c:choose>
-            <c:when test="${ !empty sessionScope.username or !empty cookie.username}">
-                <th><a href="log-out"> Log out </a></th>
-                <th><a href="user"> Profile </a></th>
+            <c:when test="${ !empty sessionScope.userID or !empty cookie.userID}">
+                <th><a href="/Snake/log-out"> Log out </a></th>
+                <th><a href="/Snake/user"> Profile </a></th>
             </c:when>
             <c:otherwise>
-                <th><a href="sign-up"> Sign up </a></th>
-                <th><a href="log-in"> Log in </a></th>
+                <th><a href="/Snake/sign-up"> Sign up </a></th>
+                <th><a href="/Snake/log-in"> Log in </a></th>
             </c:otherwise>
         </c:choose>
     </tr>

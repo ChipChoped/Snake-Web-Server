@@ -25,13 +25,13 @@ public class LogOut extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession();
-		session.removeAttribute("username");
+		session.removeAttribute("userID");
 		session.invalidate();
 
 		Cookie[] cookies = request.getCookies();
 		if (cookies != null) {
 			for (Cookie cookie : cookies) {
-				if (cookie.getName().equals("username")) {
+				if (cookie.getName().equals("userID")) {
 					cookie.setValue(null);
 					cookie.setMaxAge(0);
 					response.addCookie(cookie);

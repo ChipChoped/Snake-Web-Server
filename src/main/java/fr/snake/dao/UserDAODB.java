@@ -15,6 +15,7 @@ public class UserDAODB implements UserDAO {
     }
 
     public static void setUser(User user, ResultSet result) throws SQLException {
+        user.setId(result.getInt("id"));
         user.setUsername(result.getString("username"));
         user.setFirstName(result.getString("first_name"));
         user.setLastName(result.getString("last_name"));
@@ -47,7 +48,7 @@ public class UserDAODB implements UserDAO {
 
         try {
             connexion = daoFactory.getConnection();
-            preparedStatement = connexion.prepareStatement("INSERT INTO users VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?);");
+            preparedStatement = connexion.prepareStatement("INSERT INTO users (username, first_name, last_name, email, password, sex, victories, birth_date, inscription_date) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?);");
             setPreparedStatement(user, preparedStatement);
         } catch (SQLException e) {
             try {
@@ -67,6 +68,46 @@ public class UserDAODB implements UserDAO {
                 throw new DAOException("Impossible to communicate with the data base");
             }
         }
+    }
+
+    @Override
+    public User getUser(int id) throws DAOException, BeanException {
+        User user;
+        Connection connexion = null;
+        Statement statement = null;
+        ResultSet result = null;
+
+        try {
+            connexion = daoFactory.getConnection();
+            statement = connexion.createStatement();
+            result = statement.executeQuery("SELECT * FROM users WHERE id = '" + id + "';");
+
+            if (result.next()) {
+                user = new User();
+                setUser(user, result);
+            }
+            else
+                throw new BeanException("The user " + id + " doesn't exist");
+        } catch (SQLException e) {
+            try {
+                if (connexion != null) {
+                    connexion.rollback();
+                }
+            } catch (SQLException ignored) {
+            }
+            throw new DAOException("Impossible to communicate with the data base");
+        }
+        finally {
+            try {
+                if (connexion != null) {
+                    connexion.close();
+                }
+            } catch (SQLException e) {
+                throw new DAOException("Impossible to communicate with the data base");
+            }
+        }
+
+        return user;
     }
 
     @Override
@@ -107,6 +148,45 @@ public class UserDAODB implements UserDAO {
         }
 
         return user;
+    }
+
+    @Override
+    public int getID(String username) throws DAOException, BeanException {
+        Connection connexion = null;
+        Statement statement = null;
+        ResultSet result = null;
+        int id;
+
+        try {
+            connexion = daoFactory.getConnection();
+            statement = connexion.createStatement();
+            result = statement.executeQuery("SELECT id FROM users WHERE username = '" + username + "';");
+
+            if (result.next()) {
+                id = result.getInt("id");
+            }
+            else
+                throw new BeanException("The user " + username + " doesn't exist");
+        } catch (SQLException e) {
+            try {
+                if (connexion != null) {
+                    connexion.rollback();
+                }
+            } catch (SQLException ignored) {
+            }
+            throw new DAOException("Impossible to communicate with the data base");
+        }
+        finally {
+            try {
+                if (connexion != null) {
+                    connexion.close();
+                }
+            } catch (SQLException e) {
+                throw new DAOException("Impossible to communicate with the data base");
+            }
+        }
+
+        return id;
     }
 
     @Override

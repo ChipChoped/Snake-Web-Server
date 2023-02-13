@@ -12,7 +12,7 @@
 <%@ include file="menu.jsp" %>
 
 <div class="profile-card">
-    <img class="profile-picture" src="../ressources/images/profile_pictures/ChipChop.jpg" alt="Profile picture"/>
+   <!-- <img class="profile-picture" src="../ressources/images/profile_pictures/ChipChop.jpg" alt="Profile picture"/> -->
 
     <div>
         <h1> ${ user.username } </h1>
@@ -21,7 +21,7 @@
         <h3> Member since ${ user.inscriptionDate } </h3>
     </div>
 
-    <c:if test="${ !empty sessionScope.username or !empty cookie.username}">
+    <c:if test="${ !empty sessionScope.userID or !empty cookie.userID}">
         <button> <a href="settings/profile"></a> </button>
     </c:if>
 </div>
