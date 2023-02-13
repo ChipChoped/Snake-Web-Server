@@ -1,4 +1,3 @@
-<jsp:useBean id="user" scope="request" type="fr.snake.beans.User"/>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -7,16 +6,14 @@
 <head>
     <meta charset="UTF-8">
     <title> Log In </title>
+    <link rel="stylesheet" type="text/css" href="../ressources/css/profile.css">
 </head>
-<link rel="stylesheet" type="text/css" href="../ressources/css/profile.css">
 <body>
 <%@ include file="menu.jsp" %>
 
 <div class="profile-card">
-    <!--
-    <span> ${ pageContext.request.contextPath } </span>
-    <img class="profile-picture" src="${ pageContext.request.contextPath }/image/ChipChop.jpg" alt="Profile picture"/>
-    -->
+    <img class="profile-picture" src="../ressources/images/profile_pictures/ChipChop.jpg" alt="Profile picture"/>
+
     <div>
         <h1> ${ user.username } </h1>
         <h2> ${ user.firstName } ${ user.lastName }</h2>

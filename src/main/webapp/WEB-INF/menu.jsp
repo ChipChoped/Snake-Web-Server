@@ -3,7 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <table>
     <tr>
-        <th><a href="/Snake/"> Home </a></th>
+        <th><a href="home"> Home </a></th>
 
         <c:choose>
             <c:when test="${ !empty sessionScope.username or !empty cookie.username}">
