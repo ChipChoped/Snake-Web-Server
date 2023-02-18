@@ -344,4 +344,267 @@ public class UserDAODB implements UserDAO {
 
         return count >= 1;
     }
+
+    @Override
+    public void updateUsername(int id, String username) throws DAOException, BeanException {
+        Connection connexion = null;
+        PreparedStatement preparedStatement;
+
+        try {
+            connexion = daoFactory.getConnection();
+            preparedStatement = connexion.prepareStatement("UPDATE users SET username = ? WHERE id = ?;");
+            preparedStatement.setString(1, username);
+            preparedStatement.setString(2, String.valueOf(id));
+
+            if (preparedStatement.executeUpdate() == 0)
+                throw new BeanException("The user " + id + " doesn't exist");
+        } catch (SQLException e) {
+            try {
+                if (connexion != null) {
+                    connexion.rollback();
+                }
+            } catch (SQLException ignored) {
+            }
+            throw new DAOException("Impossible to communicate with the data base");
+        }
+        finally {
+            try {
+                if (connexion != null) {
+                    connexion.close();
+                }
+            } catch (SQLException e) {
+                throw new DAOException("Impossible to communicate with the data base");
+            }
+        }
+    }
+
+    @Override
+    public void updateFirstName(int id, String firstName) throws DAOException, BeanException {
+        Connection connexion = null;
+        PreparedStatement preparedStatement;
+
+        try {
+            connexion = daoFactory.getConnection();
+            preparedStatement = connexion.prepareStatement("UPDATE users SET first_name = ? WHERE id = ?;");
+            preparedStatement.setString(1, firstName);
+            preparedStatement.setString(2, String.valueOf(id));
+
+            if (preparedStatement.executeUpdate() == 0)
+                throw new BeanException("The user " + id + " doesn't exist");
+        } catch (SQLException e) {
+            try {
+                if (connexion != null) {
+                    connexion.rollback();
+                }
+            } catch (SQLException ignored) {
+            }
+            throw new DAOException("Impossible to communicate with the data base");
+        }
+        finally {
+            try {
+                if (connexion != null) {
+                    connexion.close();
+                }
+            } catch (SQLException e) {
+                throw new DAOException("Impossible to communicate with the data base");
+            }
+        }
+    }
+
+    @Override
+    public void updateLastName(int id, String lastName) throws DAOException, BeanException {
+        Connection connexion = null;
+        PreparedStatement preparedStatement;
+
+        try {
+            connexion = daoFactory.getConnection();
+            preparedStatement = connexion.prepareStatement("UPDATE users SET last_name = ? WHERE id = ?;");
+            preparedStatement.setString(1, lastName);
+            preparedStatement.setString(2, String.valueOf(id));
+
+            if (preparedStatement.executeUpdate() == 0)
+                throw new BeanException("The user " + id + " doesn't exist");
+        } catch (SQLException e) {
+            try {
+                if (connexion != null) {
+                    connexion.rollback();
+                }
+            } catch (SQLException ignored) {
+            }
+            throw new DAOException("Impossible to communicate with the data base");
+        }
+        finally {
+            try {
+                if (connexion != null) {
+                    connexion.close();
+                }
+            } catch (SQLException e) {
+                throw new DAOException("Impossible to communicate with the data base");
+            }
+        }
+    }
+
+    @Override
+    public void updateSex(int id, String sex) throws DAOException, BeanException {
+        Connection connexion = null;
+        PreparedStatement preparedStatement;
+
+        try {
+            connexion = daoFactory.getConnection();
+            preparedStatement = connexion.prepareStatement("UPDATE users SET sex = ? WHERE id = ?;");
+            preparedStatement.setString(1, sex);
+            preparedStatement.setString(2, String.valueOf(id));
+
+            if (preparedStatement.executeUpdate() == 0)
+                throw new BeanException("The user " + id + " doesn't exist");
+        } catch (SQLException e) {
+            try {
+                if (connexion != null) {
+                    connexion.rollback();
+                }
+            } catch (SQLException ignored) {
+            }
+            throw new DAOException("Impossible to communicate with the data base");
+        }
+        finally {
+            try {
+                if (connexion != null) {
+                    connexion.close();
+                }
+            } catch (SQLException e) {
+                throw new DAOException("Impossible to communicate with the data base");
+            }
+        }
+    }
+
+    @Override
+    public void updateBirthDate(int id, String birthDate) throws DAOException, BeanException {
+        Connection connexion = null;
+        PreparedStatement preparedStatement;
+
+        try {
+            connexion = daoFactory.getConnection();
+            preparedStatement = connexion.prepareStatement("UPDATE users SET birth_date = ? WHERE id = ?;");
+            preparedStatement.setString(1, birthDate);
+            preparedStatement.setString(2, String.valueOf(id));
+
+            if (preparedStatement.executeUpdate() == 0)
+                throw new BeanException("The user " + id + " doesn't exist");
+        } catch (SQLException e) {
+            try {
+                if (connexion != null) {
+                    connexion.rollback();
+                }
+            } catch (SQLException ignored) {
+            }
+            throw new DAOException("Impossible to communicate with the data base");
+        }
+        finally {
+            try {
+                if (connexion != null) {
+                    connexion.close();
+                }
+            } catch (SQLException e) {
+                throw new DAOException("Impossible to communicate with the data base");
+            }
+        }
+    }
+
+    @Override
+    public void updateEmail(int id, String email) throws DAOException, BeanException {
+        Connection connexion = null;
+        PreparedStatement preparedStatement;
+
+        try {
+            connexion = daoFactory.getConnection();
+            preparedStatement = connexion.prepareStatement("UPDATE users SET email = ? WHERE id = ?;");
+            preparedStatement.setString(1, email);
+            preparedStatement.setString(2, String.valueOf(id));
+
+            if (preparedStatement.executeUpdate() == 0)
+                throw new BeanException("The user " + id + " doesn't exist");
+        } catch (SQLException e) {
+            try {
+                if (connexion != null) {
+                    connexion.rollback();
+                }
+            } catch (SQLException ignored) {
+            }
+            throw new DAOException("Impossible to communicate with the data base");
+        }
+        finally {
+            try {
+                if (connexion != null) {
+                    connexion.close();
+                }
+            } catch (SQLException e) {
+                throw new DAOException("Impossible to communicate with the data base");
+            }
+        }
+    }
+
+    @Override
+    public void updatePassword(int id, String password) throws DAOException, BeanException {
+        Connection connexion = null;
+        PreparedStatement preparedStatement;
+
+        try {
+            connexion = daoFactory.getConnection();
+            preparedStatement = connexion.prepareStatement("UPDATE users SET password = ? WHERE id = ?;");
+            preparedStatement.setString(1, password);
+            preparedStatement.setString(2, String.valueOf(id));
+
+            if (preparedStatement.executeUpdate() == 0)
+                throw new BeanException("The user " + id + " doesn't exist");
+        } catch (SQLException e) {
+            try {
+                if (connexion != null) {
+                    connexion.rollback();
+                }
+            } catch (SQLException ignored) {
+            }
+            throw new DAOException("Impossible to communicate with the data base");
+        }
+        finally {
+            try {
+                if (connexion != null) {
+                    connexion.close();
+                }
+            } catch (SQLException e) {
+                throw new DAOException("Impossible to communicate with the data base");
+            }
+        }
+    }
+
+    @Override
+    public void deleteUser(int id) throws DAOException, BeanException {
+        Connection connexion = null;
+        PreparedStatement preparedStatement;
+
+        try {
+            connexion = daoFactory.getConnection();
+            preparedStatement = connexion.prepareStatement("DELETE FROM users WHERE id = ?;");
+            preparedStatement.setString(1, String.valueOf(id));
+
+            if (preparedStatement.executeUpdate() == 0)
+                throw new BeanException("The user " + id + " doesn't exist");
+        } catch (SQLException e) {
+            try {
+                if (connexion != null) {
+                    connexion.rollback();
+                }
+            } catch (SQLException ignored) {
+            }
+            throw new DAOException("Impossible to communicate with the data base");
+        }
+        finally {
+            try {
+                if (connexion != null) {
+                    connexion.close();
+                }
+            } catch (SQLException e) {
+                throw new DAOException("Impossible to communicate with the data base");
+            }
+        }
+    }
 }
