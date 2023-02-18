@@ -45,7 +45,7 @@
 		<input type="radio" id="female" name="sex" value="F">
 		<label for="female"> Female </label>
 		<c:if test="${ !form.checkedSex && !firstAttempt }">
-			<label for="last-name"> One option must be checked </label>
+			<label> One option must be checked </label>
 		</c:if>
 		<br/> <br/>
 
