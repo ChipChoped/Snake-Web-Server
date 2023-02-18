@@ -6,6 +6,7 @@ import fr.snake.dao.UserDAO;
 import fr.snake.forms.SignUpForm;
 
 import java.io.*;
+import java.security.NoSuchAlgorithmException;
 import java.time.LocalDate;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
@@ -17,6 +18,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
 
 import fr.snake.beans.User;
+
+import static fr.snake.utils.SHA256.encrypt;
 
 /**
  * Servlet implementation class Inscription
@@ -73,7 +76,12 @@ public class SignUp extends HttpServlet {
 			user.setLastName(request.getParameter("last-name"));
 			user.setSex(request.getParameter("sex"));
 			user.setEmail(request.getParameter("email"));
-			user.setPassword(request.getParameter("password"));
+			try {
+				user.setPassword(encrypt(request.getParameter("password")));
+			} catch (NoSuchAlgorithmException e) {
+				request.setAttribute("error", e.getMessage());
+				this.getServletContext().getRequestDispatcher("/WEB-INF/page-not-fount.jsp").forward(request, response);
+			}
 			user.setBirthDate(request.getParameter("birth-date"));
 			user.setInscriptionDate(String.valueOf(LocalDate.now()));
 			user.setVictories(0);

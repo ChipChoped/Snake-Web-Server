@@ -8,6 +8,7 @@ import fr.snake.forms.LogInForm;
 
 import java.io.IOException;
 import java.io.Serial;
+import java.security.NoSuchAlgorithmException;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
@@ -60,8 +61,9 @@ public class LogIn extends HttpServlet {
 			}
 
 			this.getServletContext().getRequestDispatcher("/WEB-INF/home.jsp").forward(request, response);
-		} catch (BeanException | DAOException e) {
+		} catch (BeanException | DAOException | NoSuchAlgorithmException e) {
 			request.setAttribute("error", e.getMessage());
+			this.getServletContext().getRequestDispatcher("/WEB-INF/page-not-found.jsp").forward(request, response);
 		}
 
 		doGet(request, response);

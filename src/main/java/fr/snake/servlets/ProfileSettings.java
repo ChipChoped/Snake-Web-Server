@@ -11,9 +11,12 @@ import fr.snake.forms.UpdateInfoForm;
 import java.io.IOException;
 import java.io.Serial;
 import java.lang.reflect.Method;
+import java.security.NoSuchAlgorithmException;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.*;
+
+import static fr.snake.utils.SHA256.encrypt;
 
 /**
  * Servlet implementation class profileSetting
@@ -116,7 +119,7 @@ public class ProfileSettings extends HttpServlet {
 					form.canUpdatePassword(request.getParameter("current-password"), request.getParameter("password"), request.getParameter("password-rep"), user.getPassword());
 
 					if (form.getCurrentPasswordState() == InfoState.UPDATABLE && form.getPasswordState() == InfoState.UPDATABLE)
-						userDAO.updatePassword(Integer.parseInt(userID), request.getParameter("password"));
+						userDAO.updatePassword(Integer.parseInt(userID), encrypt(request.getParameter("password")));
 
 					break;
 			}
@@ -124,7 +127,7 @@ public class ProfileSettings extends HttpServlet {
 			request.setAttribute("form", form);
 			request.setAttribute("passedSubmit", submit);
 			doGet(request, response);
-		} catch (DAOException | BeanException e) {
+		} catch (DAOException | BeanException | NoSuchAlgorithmException e) {
 			request.setAttribute("error", e.getMessage());
 			this.getServletContext().getRequestDispatcher("/WEB-INF/page-not-found.jsp").forward(request, response);
 		}

@@ -5,10 +5,13 @@ import fr.snake.dao.DAOFactory;
 import fr.snake.dao.UserDAO;
 import fr.snake.enums.InfoState;
 
+import java.security.NoSuchAlgorithmException;
 import java.time.LocalDate;
 import java.time.Period;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import static fr.snake.utils.SHA256.encrypt;
 
 public class UpdateInfoForm {
     private InfoState usernameState;
@@ -112,8 +115,8 @@ public class UpdateInfoForm {
         }
     }
 
-    public void canUpdatePassword(String typedCurrentPassword, String password, String passwordRepetition, String currentPassword) {
-        if (typedCurrentPassword.equals(currentPassword)) {
+    public void canUpdatePassword(String typedCurrentPassword, String password, String passwordRepetition, String currentPassword) throws NoSuchAlgorithmException {
+        if (encrypt(typedCurrentPassword).equals(currentPassword)) {
             currentPasswordState = InfoState.UPDATABLE;
 
             if (!password.equals(currentPassword))

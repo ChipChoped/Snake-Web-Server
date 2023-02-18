@@ -8,7 +8,7 @@ CREATE TABLE users (
     first_name VARCHAR(30),
     last_name VARCHAR(30),
     email VARCHAR(50),
-    password VARCHAR(20),
+    password CHAR(64),
     sex ENUM('M', 'F'),
     victories INTEGER,
     birth_date DATE,
@@ -16,5 +16,4 @@ CREATE TABLE users (
 );
 
 INSERT INTO users (username, first_name, last_name, email, password, sex, victories, birth_date, inscription_date) VALUES
-('TheUnknownMan', 'John', 'Doe', 'john-doe@outlook.fr',
-    '1234azerty', 'M', 7, '1998-04-26', now())
+('TheUnknownMan', 'John', 'Doe', 'john-doe@outlook.fr', SHA2('1234azerty', 256), 'M', 7, '1998-04-26', now())
