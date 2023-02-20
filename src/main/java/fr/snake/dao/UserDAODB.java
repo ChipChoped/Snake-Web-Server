@@ -25,6 +25,7 @@ public class UserDAODB implements UserDAO {
         user.setVictories(result.getInt("victories"));
         user.setBirthDate(result.getString("birth_date"));
         user.setInscriptionDate(result.getString("inscription_date"));
+        user.setProfilePicture(result.getBinaryStream("profile_picture"));
     }
 
     public static void setPreparedStatement(User user, PreparedStatement preparedStatement) throws SQLException {
@@ -34,22 +35,30 @@ public class UserDAODB implements UserDAO {
         preparedStatement.setString(4, user.getEmail());
         preparedStatement.setString(5, user.getPassword());
         preparedStatement.setString(6, user.getSex());
-        preparedStatement.setString(7, Integer.toString(user.getVictories()));
+        preparedStatement.setInt(7, user.getVictories());
         preparedStatement.setString(8, user.getBirthDate());
         preparedStatement.setString(9, user.getInscriptionDate());
-
-        preparedStatement.executeUpdate();
     }
 
     @Override
-    public void addUser(User user) throws DAOException {
+    public void addUser(User user, boolean withPicture) throws DAOException {
         Connection connexion = null;
         PreparedStatement preparedStatement;
 
         try {
             connexion = daoFactory.getConnection();
-            preparedStatement = connexion.prepareStatement("INSERT INTO users (username, first_name, last_name, email, password, sex, victories, birth_date, inscription_date) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?);");
-            setPreparedStatement(user, preparedStatement);
+            
+            if (withPicture) {
+                preparedStatement = connexion.prepareStatement("INSERT INTO users (username, first_name, last_name, email, password, sex, victories, birth_date, inscription_date, profile_picture) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?);");
+                setPreparedStatement(user, preparedStatement);
+                preparedStatement.setBinaryStream(10, user.getProfilePicture());
+            }
+            else {
+                preparedStatement = connexion.prepareStatement("INSERT INTO users (username, first_name, last_name, email, password, sex, victories, birth_date, inscription_date) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?);");
+                setPreparedStatement(user, preparedStatement);
+            }
+
+            preparedStatement.executeUpdate();
         } catch (SQLException e) {
             try {
                 if (connexion != null) {

@@ -6,7 +6,7 @@ import fr.snake.beans.BeanException;
 import fr.snake.beans.User;
 
 public interface UserDAO {
-    void addUser(User user) throws DAOException;
+    void addUser(User user, boolean withPicture) throws DAOException;
 
     User getUser(int id) throws DAOException, BeanException;
     User getUser(String username) throws DAOException, BeanException;

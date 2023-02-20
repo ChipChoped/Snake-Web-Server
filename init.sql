@@ -12,7 +12,8 @@ CREATE TABLE users (
     sex ENUM('M', 'F'),
     victories INTEGER,
     birth_date DATE,
-    inscription_date DATE
+    inscription_date DATE,
+    profile_picture LONGBLOB
 );
 
 INSERT INTO users (username, first_name, last_name, email, password, sex, victories, birth_date, inscription_date) VALUES

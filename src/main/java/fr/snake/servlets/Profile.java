@@ -7,6 +7,9 @@ import fr.snake.dao.DAOFactory;
 import fr.snake.dao.UserDAO;
 
 import java.io.IOException;
+import java.io.InputStream;
+import java.nio.charset.StandardCharsets;
+import java.util.Base64;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -43,6 +46,16 @@ public class Profile extends HttpServlet {
 		try {
 			User user = userDAO.getUser(username);
 			request.setAttribute("user", user);
+
+			InputStream profilePicture = user.getProfilePicture();
+
+			if (profilePicture != null) {
+				byte[] image = profilePicture.readAllBytes();
+				String base64Encoded = new String(Base64.getEncoder().encode(image), StandardCharsets.UTF_8);
+
+				response.setContentType("image/jpg");
+				request.setAttribute("profilePicture", base64Encoded);
+			}
 		} catch (DAOException e) {
 			request.setAttribute("error", e.getMessage());
 		} catch (BeanException e) {

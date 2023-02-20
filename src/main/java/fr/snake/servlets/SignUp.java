@@ -6,10 +6,13 @@ import fr.snake.dao.UserDAO;
 import fr.snake.forms.SignUpForm;
 
 import java.io.*;
+import java.nio.charset.StandardCharsets;
 import java.security.NoSuchAlgorithmException;
 import java.time.LocalDate;
+import java.util.Base64;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
+import javax.servlet.ServletOutputStream;
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -88,12 +91,19 @@ public class SignUp extends HttpServlet {
 
 			Part part = request.getPart("profil-picture");
 			String fileName = getFileName(part);
+			boolean pp;
 
-			if (fileName != null && !fileName.isEmpty())
-				saveFile(part, user.getUsername());
+			if (fileName != null && !fileName.isEmpty()) {
+				pp = true;
+				user.setProfilePicture(part.getInputStream());
+			}
+			else {
+				pp = false;
+				user.setProfilePicture(null);
+			}
 
 			try {
-				userDAO.addUser(user);
+				userDAO.addUser(user, pp);
 			} catch (DAOException e) {
 				request.setAttribute("error", e.getMessage());
 				this.getServletContext().getRequestDispatcher("/WEB-INF/page-not-found.jsp").forward(request, response);
@@ -115,21 +125,5 @@ public class SignUp extends HttpServlet {
 				return contentDisposition.substring(contentDisposition.indexOf('=') + 1).trim().replace("\"", "");
 
 		return null;
-	}
-
-	private void saveFile(Part part, String fileName) throws IOException {
-		ServletContext context = this.getServletContext();
-		String FILE_PATH = context.getInitParameter("path") + "profil_pictures/";
-
-
-		try (BufferedInputStream input = new BufferedInputStream(part.getInputStream(), BUFFER_SIZE);
-			 BufferedOutputStream output = new BufferedOutputStream(new FileOutputStream(new File(FILE_PATH, fileName + ".jpg")), BUFFER_SIZE)) {
-
-			byte[] buffer = new byte[BUFFER_SIZE];
-			int length;
-			while ((length = input.read(buffer)) > 0) {
-				output.write(buffer, 0, length);
-			}
-		}
 	}
 }

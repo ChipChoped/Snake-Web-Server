@@ -1,5 +1,7 @@
 package fr.snake.beans;
 
+import java.io.InputStream;
+
 public class User {
 	private int id;
 	private String username;
@@ -11,6 +13,7 @@ public class User {
 	private String password;
 	private String inscriptionDate;
 	private int victories;
+	private InputStream profilePicture;
 
 	public int getId() {
 		return id;
@@ -71,5 +74,11 @@ public class User {
 	}
 	public void setVictories(int victories) {
 		this.victories = victories;
+	}
+	public InputStream getProfilePicture() {
+		return profilePicture;
+	}
+	public void setProfilePicture(InputStream profilePicture) {
+		this.profilePicture = profilePicture;
 	}
 }

@@ -12,8 +12,14 @@
 <%@ include file="menu.jsp" %>
 
 <div class="profile-card">
-   <!-- <img class="profile-picture" src="../ressources/images/profile_pictures/ChipChop.jpg" alt="Profile picture"/> -->
-
+    <c:choose>
+        <c:when test="${ !empty profilePicture }">
+            <img src="data:image/jpg;base64,${ requestScope['profilePicture'] }" alt="Profile picture"/>
+        </c:when>
+        <c:otherwise>
+            <img src="../ressources/images/default_profile_picture.png" alt="Profile picture"/>
+        </c:otherwise>
+    </c:choose>
     <div>
         <h1> ${ user.username } </h1>
         <h2> ${ user.firstName } ${ user.lastName }</h2>
@@ -21,8 +27,9 @@
         <h3> Member since ${ user.inscriptionDate } </h3>
     </div>
 
-    <c:if test="${ !empty sessionScope.userID or !empty cookie.userID}">
-        <button> <a href="settings/profile"></a> </button>
+    <c:set var="id" value="${ Integer.toString(user.id) }"/>
+    <c:if test="${ sessionScope.userID == id || cookie.userID.value == id }">
+        <button> <a href="../settings/profile"> Modify </a> </button>
     </c:if>
 </div>
 </body>
