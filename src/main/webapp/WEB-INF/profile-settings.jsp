@@ -12,9 +12,26 @@
 <body>
 <%@ include file="menu.jsp" %>
 
-<h2> Update my information </h2>
 
 <form action="profile" method="POST" autocomplete="on">
+    <h2> Update profile picture </h2>
+
+    <c:choose>
+        <c:when test="${ !empty profilePicture }">
+            <img class="profile-picture" src="data:image/jpg;base64,${ requestScope['profilePicture'] }" alt="Profile picture"/>
+        </c:when>
+        <c:otherwise>
+            <img src="../ressources/images/default_profile_picture.png" alt="Profile picture"/>
+        </c:otherwise>
+    </c:choose>
+
+    <input type="file" id="profil-picture" name="profil-picture">
+    <br/> <br/>
+
+    <button type="submit"> Create account </button>
+
+    <h2> Update information </h2>
+
     <fieldset>
         <label for="username"> Username </label>
         <input type="text" id="username" name="username" value="${ user.username }"/>

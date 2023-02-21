@@ -9,9 +9,12 @@ import fr.snake.enums.InfoState;
 import fr.snake.forms.UpdateInfoForm;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.Serial;
 import java.lang.reflect.Method;
+import java.nio.charset.StandardCharsets;
 import java.security.NoSuchAlgorithmException;
+import java.util.Base64;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.*;
@@ -45,10 +48,18 @@ public class ProfileSettings extends HttpServlet {
 
 		if (userID != null) {
 			try {
-				if (request.getAttribute("firstAttempt") == null)
-					request.setAttribute("firstAttempt", true);
+				User user = userDAO.getUser(Integer.parseInt(userID));
+				InputStream profilePicture = user.getProfilePicture();
 
-				request.setAttribute("user", userDAO.getUser(Integer.parseInt(userID)));
+				if (profilePicture != null) {
+					byte[] image = profilePicture.readAllBytes();
+					String base64Encoded = new String(Base64.getEncoder().encode(image), StandardCharsets.UTF_8);
+
+					response.setContentType("image/jpg,png");
+					request.setAttribute("profilePicture", base64Encoded);
+				}
+
+				request.setAttribute("user", user);
 				this.getServletContext().getRequestDispatcher("/WEB-INF/profile-settings.jsp").forward(request, response);
 			} catch (DAOException | BeanException e) {
 				request.setAttribute("error", e.getMessage());
