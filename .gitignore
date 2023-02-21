@@ -208,6 +208,7 @@ replay_pid*
 
 .idea/
 *.iml
+*.eml
 
 # End of https://www.toptal.com/developers/gitignore/api/java,intellij,eclipse
 /build/
