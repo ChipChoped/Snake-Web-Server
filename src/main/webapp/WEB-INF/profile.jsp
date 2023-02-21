@@ -14,13 +14,13 @@
 <div class="profile-card">
     <c:choose>
         <c:when test="${ !empty profilePicture }">
-            <img src="data:image/jpg;base64,${ requestScope['profilePicture'] }" alt="Profile picture"/>
+            <img class="profile-picture" src="data:image/jpg;base64,${ requestScope['profilePicture'] }" alt="Profile picture"/>
         </c:when>
         <c:otherwise>
             <img src="../ressources/images/default_profile_picture.png" alt="Profile picture"/>
         </c:otherwise>
     </c:choose>
-    <div>
+    <div class="profile-information">
         <h1> ${ user.username } </h1>
         <h2> ${ user.firstName } ${ user.lastName }</h2>
         <h3> Won ${ user.victories } game(s) </h3>
@@ -29,7 +29,9 @@
 
     <c:set var="id" value="${ Integer.toString(user.id) }"/>
     <c:if test="${ sessionScope.userID == id || cookie.userID.value == id }">
-        <button> <a href="../settings/profile"> Modify </a> </button>
+         <a href="../settings/profile">
+             <button> Modify </button>
+         </a>
     </c:if>
 </div>
 </body>

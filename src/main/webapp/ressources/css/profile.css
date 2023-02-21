@@ -1,14 +1,22 @@
 .profile-card {
     display: flex;
     flex-direction: row;
+    justify-content: center;
 }
 
 .profile-picture {
-    flex-grow: 1;
+    height: 10em;
+    width: 10em;
+
+    margin-right: 5em;
+    border-radius: 2em;
 }
 
-.profile-card {
-    flex-grow: 2;
+.profile-information {
     display: flex;
     flex-direction: column;
+}
+
+.profile-settings-button {
+
 }
