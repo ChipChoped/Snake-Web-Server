@@ -88,8 +88,8 @@
 		</c:if>
 		<br/> <br/>
 
-		<label for="profil-picture"> Profile picture </label>
-		<input type="file" id="profil-picture" name="profil-picture">
+		<label for="profile-picture"> Profile picture </label>
+		<input type="file" id="profile-picture" name="profile-picture">
 		<br/> <br/>
 		
 		<button type="submit"> Create account </button>

@@ -89,7 +89,7 @@ public class SignUp extends HttpServlet {
 			user.setInscriptionDate(String.valueOf(LocalDate.now()));
 			user.setVictories(0);
 
-			Part part = request.getPart("profil-picture");
+			Part part = request.getPart("profile-picture");
 			String fileName = getFileName(part);
 			boolean pp;
 
