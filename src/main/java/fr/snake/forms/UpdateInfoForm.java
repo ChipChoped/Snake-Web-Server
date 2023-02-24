@@ -11,7 +11,7 @@ import java.time.Period;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import static fr.snake.utils.SHA256.encrypt;
+import static fr.snake.functions.SHA256.encrypt;
 
 public class UpdateInfoForm {
     private InfoState usernameState;

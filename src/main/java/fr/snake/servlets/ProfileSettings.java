@@ -19,7 +19,7 @@ import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.*;
 
-import static fr.snake.utils.SHA256.encrypt;
+import static fr.snake.functions.SHA256.encrypt;
 
 /**
  * Servlet implementation class profileSetting

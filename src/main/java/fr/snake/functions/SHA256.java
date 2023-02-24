@@ -1,4 +1,4 @@
-package fr.snake.utils;
+package fr.snake.functions;
 
 import java.math.BigInteger;
 import java.nio.charset.StandardCharsets;

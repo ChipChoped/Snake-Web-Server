@@ -6,13 +6,9 @@ import fr.snake.dao.UserDAO;
 import fr.snake.forms.SignUpForm;
 
 import java.io.*;
-import java.nio.charset.StandardCharsets;
 import java.security.NoSuchAlgorithmException;
 import java.time.LocalDate;
-import java.util.Base64;
-import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
-import javax.servlet.ServletOutputStream;
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -22,7 +18,7 @@ import javax.servlet.http.Part;
 
 import fr.snake.beans.User;
 
-import static fr.snake.utils.SHA256.encrypt;
+import static fr.snake.functions.SHA256.encrypt;
 
 /**
  * Servlet implementation class Inscription

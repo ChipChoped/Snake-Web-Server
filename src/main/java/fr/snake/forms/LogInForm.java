@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import java.security.NoSuchAlgorithmException;
 
-import static fr.snake.utils.SHA256.encrypt;
+import static fr.snake.functions.SHA256.encrypt;
 
 public class LogInForm {
     private boolean loginsExist;
