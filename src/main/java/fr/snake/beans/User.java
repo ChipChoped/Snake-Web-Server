@@ -13,6 +13,7 @@ public class User {
 	private String password;
 	private String inscriptionDate;
 	private int victories;
+	private boolean online;
 	private InputStream profilePicture;
 
 	public int getId() {
@@ -74,6 +75,12 @@ public class User {
 	}
 	public void setVictories(int victories) {
 		this.victories = victories;
+	}
+	public boolean isOnline() {
+		return online;
+	}
+	public void setOnline(boolean online) {
+		this.online = online;
 	}
 	public InputStream getProfilePicture() {
 		return profilePicture;

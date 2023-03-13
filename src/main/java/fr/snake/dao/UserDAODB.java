@@ -25,6 +25,7 @@ public class UserDAODB implements UserDAO {
         user.setVictories(result.getInt("victories"));
         user.setBirthDate(result.getString("birth_date"));
         user.setInscriptionDate(result.getString("inscription_date"));
+        user.setOnline(result.getBoolean("online"));
         user.setProfilePicture(result.getBinaryStream("profile_picture"));
     }
 
@@ -38,6 +39,7 @@ public class UserDAODB implements UserDAO {
         preparedStatement.setInt(7, user.getVictories());
         preparedStatement.setString(8, user.getBirthDate());
         preparedStatement.setString(9, user.getInscriptionDate());
+        preparedStatement.setBoolean(10, user.isOnline());
     }
 
     @Override
@@ -49,12 +51,12 @@ public class UserDAODB implements UserDAO {
             connexion = daoFactory.getConnection();
             
             if (withPicture) {
-                preparedStatement = connexion.prepareStatement("INSERT INTO users (username, first_name, last_name, email, password, sex, victories, birth_date, inscription_date, profile_picture) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?);");
+                preparedStatement = connexion.prepareStatement("INSERT INTO users (username, first_name, last_name, email, password, sex, victories, birth_date, inscription_date, online, profile_picture) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);");
                 setPreparedStatement(user, preparedStatement);
-                preparedStatement.setBinaryStream(10, user.getProfilePicture());
+                preparedStatement.setBinaryStream(11, user.getProfilePicture());
             }
             else {
-                preparedStatement = connexion.prepareStatement("INSERT INTO users (username, first_name, last_name, email, password, sex, victories, birth_date, inscription_date) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?);");
+                preparedStatement = connexion.prepareStatement("INSERT INTO users (username, first_name, last_name, email, password, sex, victories, birth_date, inscription_date, online) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?);");
                 setPreparedStatement(user, preparedStatement);
             }
 
@@ -66,7 +68,7 @@ public class UserDAODB implements UserDAO {
                 }
             } catch (SQLException ignored) {
             }
-            throw new DAOException("Impossible to communicate with the data base");
+            throw new DAOException("Impossible to communicate with the database");
         }
         finally {
             try {
@@ -74,7 +76,7 @@ public class UserDAODB implements UserDAO {
                     connexion.close();
                 }
             } catch (SQLException e) {
-                throw new DAOException("Impossible to communicate with the data base");
+                throw new DAOException("Impossible to communicate with the database");
             }
         }
     }
@@ -104,7 +106,7 @@ public class UserDAODB implements UserDAO {
                 }
             } catch (SQLException ignored) {
             }
-            throw new DAOException("Impossible to communicate with the data base");
+            throw new DAOException("Impossible to communicate with the database");
         }
         finally {
             try {
@@ -112,7 +114,7 @@ public class UserDAODB implements UserDAO {
                     connexion.close();
                 }
             } catch (SQLException e) {
-                throw new DAOException("Impossible to communicate with the data base");
+                throw new DAOException("Impossible to communicate with the database");
             }
         }
 
@@ -144,7 +146,7 @@ public class UserDAODB implements UserDAO {
                 }
             } catch (SQLException ignored) {
             }
-            throw new DAOException("Impossible to communicate with the data base");
+            throw new DAOException("Impossible to communicate with the database");
         }
         finally {
             try {
@@ -152,7 +154,7 @@ public class UserDAODB implements UserDAO {
                     connexion.close();
                 }
             } catch (SQLException e) {
-                throw new DAOException("Impossible to communicate with the data base");
+                throw new DAOException("Impossible to communicate with the database");
             }
         }
 
@@ -183,7 +185,7 @@ public class UserDAODB implements UserDAO {
                 }
             } catch (SQLException ignored) {
             }
-            throw new DAOException("Impossible to communicate with the data base");
+            throw new DAOException("Impossible to communicate with the database");
         }
         finally {
             try {
@@ -191,7 +193,7 @@ public class UserDAODB implements UserDAO {
                     connexion.close();
                 }
             } catch (SQLException e) {
-                throw new DAOException("Impossible to communicate with the data base");
+                throw new DAOException("Impossible to communicate with the database");
             }
         }
 
@@ -223,7 +225,7 @@ public class UserDAODB implements UserDAO {
                 }
             } catch (SQLException ignored) {
             }
-            throw new DAOException("Impossible to communicate with the data base");
+            throw new DAOException("Impossible to communicate with the database");
         }
         finally {
             try {
@@ -231,7 +233,7 @@ public class UserDAODB implements UserDAO {
                     connexion.close();
                 }
             } catch (SQLException e) {
-                throw new DAOException("Impossible to communicate with the data base");
+                throw new DAOException("Impossible to communicate with the database");
             }
         }
 
@@ -261,7 +263,7 @@ public class UserDAODB implements UserDAO {
                 }
             } catch (SQLException ignored) {
             }
-            throw new DAOException("Impossible to communicate with the data base");
+            throw new DAOException("Impossible to communicate with the database");
         }
         finally {
             try {
@@ -269,7 +271,7 @@ public class UserDAODB implements UserDAO {
                     connexion.close();
                 }
             } catch (SQLException e) {
-                throw new DAOException("Impossible to communicate with the data base");
+                throw new DAOException("Impossible to communicate with the database");
             }
         }
 
@@ -299,7 +301,7 @@ public class UserDAODB implements UserDAO {
                 }
             } catch (SQLException ignored) {
             }
-            throw new DAOException("Impossible to communicate with the data base");
+            throw new DAOException("Impossible to communicate with the database");
         }
         finally {
             try {
@@ -307,7 +309,7 @@ public class UserDAODB implements UserDAO {
                     connexion.close();
                 }
             } catch (SQLException e) {
-                throw new DAOException("Impossible to communicate with the data base");
+                throw new DAOException("Impossible to communicate with the database");
             }
         }
 
@@ -339,7 +341,7 @@ public class UserDAODB implements UserDAO {
                 }
             } catch (SQLException ignored) {
             }
-            throw new DAOException("Impossible to communicate with the data base");
+            throw new DAOException("Impossible to communicate with the database");
         }
         finally {
             try {
@@ -347,7 +349,7 @@ public class UserDAODB implements UserDAO {
                     connexion.close();
                 }
             } catch (SQLException e) {
-                throw new DAOException("Impossible to communicate with the data base");
+                throw new DAOException("Impossible to communicate with the database");
             }
         }
 
@@ -374,7 +376,7 @@ public class UserDAODB implements UserDAO {
                 }
             } catch (SQLException ignored) {
             }
-            throw new DAOException("Impossible to communicate with the data base");
+            throw new DAOException("Impossible to communicate with the database");
         }
         finally {
             try {
@@ -382,7 +384,7 @@ public class UserDAODB implements UserDAO {
                     connexion.close();
                 }
             } catch (SQLException e) {
-                throw new DAOException("Impossible to communicate with the data base");
+                throw new DAOException("Impossible to communicate with the database");
             }
         }
     }
@@ -407,7 +409,7 @@ public class UserDAODB implements UserDAO {
                 }
             } catch (SQLException ignored) {
             }
-            throw new DAOException("Impossible to communicate with the data base");
+            throw new DAOException("Impossible to communicate with the database");
         }
         finally {
             try {
@@ -415,7 +417,7 @@ public class UserDAODB implements UserDAO {
                     connexion.close();
                 }
             } catch (SQLException e) {
-                throw new DAOException("Impossible to communicate with the data base");
+                throw new DAOException("Impossible to communicate with the database");
             }
         }
     }
@@ -440,7 +442,7 @@ public class UserDAODB implements UserDAO {
                 }
             } catch (SQLException ignored) {
             }
-            throw new DAOException("Impossible to communicate with the data base");
+            throw new DAOException("Impossible to communicate with the database");
         }
         finally {
             try {
@@ -448,7 +450,7 @@ public class UserDAODB implements UserDAO {
                     connexion.close();
                 }
             } catch (SQLException e) {
-                throw new DAOException("Impossible to communicate with the data base");
+                throw new DAOException("Impossible to communicate with the database");
             }
         }
     }
@@ -473,7 +475,7 @@ public class UserDAODB implements UserDAO {
                 }
             } catch (SQLException ignored) {
             }
-            throw new DAOException("Impossible to communicate with the data base");
+            throw new DAOException("Impossible to communicate with the database");
         }
         finally {
             try {
@@ -481,7 +483,7 @@ public class UserDAODB implements UserDAO {
                     connexion.close();
                 }
             } catch (SQLException e) {
-                throw new DAOException("Impossible to communicate with the data base");
+                throw new DAOException("Impossible to communicate with the database");
             }
         }
     }
@@ -506,7 +508,7 @@ public class UserDAODB implements UserDAO {
                 }
             } catch (SQLException ignored) {
             }
-            throw new DAOException("Impossible to communicate with the data base");
+            throw new DAOException("Impossible to communicate with the database");
         }
         finally {
             try {
@@ -514,7 +516,7 @@ public class UserDAODB implements UserDAO {
                     connexion.close();
                 }
             } catch (SQLException e) {
-                throw new DAOException("Impossible to communicate with the data base");
+                throw new DAOException("Impossible to communicate with the database");
             }
         }
     }
@@ -539,7 +541,7 @@ public class UserDAODB implements UserDAO {
                 }
             } catch (SQLException ignored) {
             }
-            throw new DAOException("Impossible to communicate with the data base");
+            throw new DAOException("Impossible to communicate with the database");
         }
         finally {
             try {
@@ -547,7 +549,7 @@ public class UserDAODB implements UserDAO {
                     connexion.close();
                 }
             } catch (SQLException e) {
-                throw new DAOException("Impossible to communicate with the data base");
+                throw new DAOException("Impossible to communicate with the database");
             }
         }
     }
@@ -572,7 +574,7 @@ public class UserDAODB implements UserDAO {
                 }
             } catch (SQLException ignored) {
             }
-            throw new DAOException("Impossible to communicate with the data base");
+            throw new DAOException("Impossible to communicate with the database");
         }
         finally {
             try {
@@ -580,7 +582,40 @@ public class UserDAODB implements UserDAO {
                     connexion.close();
                 }
             } catch (SQLException e) {
-                throw new DAOException("Impossible to communicate with the data base");
+                throw new DAOException("Impossible to communicate with the database");
+            }
+        }
+    }
+
+    @Override
+    public void updateOnline(int id, boolean online) throws DAOException, BeanException {
+        Connection connexion = null;
+        PreparedStatement preparedStatement;
+
+        try {
+            connexion = daoFactory.getConnection();
+            preparedStatement = connexion.prepareStatement("UPDATE users SET online = ? WHERE id = ?;");
+            preparedStatement.setBoolean(1, online);
+            preparedStatement.setString(2, String.valueOf(id));
+
+            if (preparedStatement.executeUpdate() == 0)
+                throw new BeanException("The user " + id + " doesn't exist");
+        } catch (SQLException e) {
+            try {
+                if (connexion != null) {
+                    connexion.rollback();
+                }
+            } catch (SQLException ignored) {
+            }
+            throw new DAOException("Impossible to communicate with the database");
+        }
+        finally {
+            try {
+                if (connexion != null) {
+                    connexion.close();
+                }
+            } catch (SQLException e) {
+                throw new DAOException("Impossible to communicate with the database");
             }
         }
     }
@@ -604,7 +639,7 @@ public class UserDAODB implements UserDAO {
                 }
             } catch (SQLException ignored) {
             }
-            throw new DAOException("Impossible to communicate with the data base");
+            throw new DAOException("Impossible to communicate with the database");
         }
         finally {
             try {
@@ -612,7 +647,7 @@ public class UserDAODB implements UserDAO {
                     connexion.close();
                 }
             } catch (SQLException e) {
-                throw new DAOException("Impossible to communicate with the data base");
+                throw new DAOException("Impossible to communicate with the database");
             }
         }
     }

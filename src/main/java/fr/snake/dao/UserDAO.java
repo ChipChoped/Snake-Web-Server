@@ -24,6 +24,7 @@ public interface UserDAO {
     void updateBirthDate(int id, String birthDate) throws DAOException, BeanException;
     void updateEmail(int id, String email) throws DAOException, BeanException;
     void updatePassword(int id, String password) throws DAOException, BeanException;
+    void updateOnline(int id, boolean online) throws DAOException, BeanException;
 
     void deleteUser(int id) throws DAOException, BeanException;
 }

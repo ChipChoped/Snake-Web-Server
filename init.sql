@@ -13,6 +13,7 @@ CREATE TABLE users (
     victories INTEGER,
     birth_date DATE,
     inscription_date DATE,
+    online BOOLEAN,
     profile_picture LONGBLOB
 );
 
@@ -25,8 +26,8 @@ CREATE TABLE games (
     FOREIGN KEY (user_id) REFERENCES users(id)
 );
 
-INSERT INTO users (username, first_name, last_name, email, password, sex, victories, birth_date, inscription_date) VALUES
-('TheUnknownMan', 'John', 'Doe', 'john-doe@outlook.fr', SHA2('1234azerty', 256), 'M', 7, '1998-04-26', '2023-02-14');
+INSERT INTO users (username, first_name, last_name, email, password, sex, victories, birth_date, inscription_date, online) VALUES
+('TheUnknownMan', 'John', 'Doe', 'john-doe@outlook.fr', SHA2('1234azerty', 256), 'M', 7, '1998-04-26', '2023-02-14', false);
 
 INSERT INTO games (user_id, won, score, date) VALUES
 (1, true, 50, '2023-02-24 16:23:52'),
