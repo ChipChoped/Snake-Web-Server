@@ -34,4 +34,8 @@ public class DAOFactory {
     public UserDAO getUserDao() {
         return new UserDAODB(this);
     }
+
+    public GameDAO getGameDao() {
+        return new GameDAODB(this);
+    }
 }
