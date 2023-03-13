@@ -24,4 +24,8 @@ public class UserService {
 
         return userID;
     }
+
+    public static void updateOnline(UserIDDTO ID, boolean online) throws DAOException, BeanException {
+         userDAO.updateOnline(ID.getId(), online);
+    }
 }
