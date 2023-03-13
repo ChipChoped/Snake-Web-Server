@@ -10,7 +10,7 @@ import java.util.List;
 public class UserDAODB implements UserDAO {
     private final DAOFactory daoFactory;
 
-    UserDAODB(DAOFactory daoFactory) {
+    public UserDAODB(DAOFactory daoFactory) {
         this.daoFactory = daoFactory;
     }
 
