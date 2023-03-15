@@ -1,15 +1,19 @@
 package fr.snake.servlets;
 
 import fr.snake.beans.BeanException;
+import fr.snake.beans.Game;
 import fr.snake.beans.User;
 import fr.snake.dao.DAOException;
 import fr.snake.dao.DAOFactory;
+import fr.snake.dao.GameDAO;
 import fr.snake.dao.UserDAO;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
 import java.util.Base64;
+import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -23,6 +27,7 @@ import javax.servlet.http.HttpServletResponse;
 public class Profile extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private final UserDAO userDAO;
+	private final GameDAO gameDAO;
 
     /**
      * @see HttpServlet#HttpServlet()
@@ -31,6 +36,7 @@ public class Profile extends HttpServlet {
         super();
 		DAOFactory daoFactory = DAOFactory.getInstance();
 		userDAO = daoFactory.getUserDao();
+		gameDAO = daoFactory.getGameDao();
         // TODO Auto-generated constructor stub
     }
 
@@ -56,6 +62,8 @@ public class Profile extends HttpServlet {
 				response.setContentType("image/jpg");
 				request.setAttribute("profilePicture", base64Encoded);
 			}
+
+			request.setAttribute("games", gameDAO.getUserRecentGames(user.getId()));
 		} catch (DAOException e) {
 			request.setAttribute("error", e.getMessage());
 		} catch (BeanException e) {

@@ -34,5 +34,32 @@
          </a>
     </c:if>
 </div>
+
+<h2> Recent games </h2>
+
+<table>
+    <tr>
+        <td> Won </td>
+        <td> Score </td>
+        <td> Date </td>
+    </tr>
+    <c:forEach items="${ games }" var="game" varStatus="status">
+        <c:choose>
+            <c:when test="${ game.won == true }">
+                <c:set var="color" value="darkgreen" scope="page" />
+                <c:set var="won" value="Won" scope="page" />
+            </c:when>
+            <c:otherwise>
+                <c:set var="color" value="darkred" scope="page" />
+                <c:set var="won" value="Lost" scope="page" />
+            </c:otherwise>
+        </c:choose>
+        <tr style="background-color: ${ color }">
+            <td> ${ won } </td>
+            <td> ${ game.score } </td>
+            <td> ${ game.date } </td>
+        </tr>
+    </c:forEach>
+</table>
 </body>
 </html>
