@@ -34,7 +34,7 @@ public class GameDAODB implements GameDAO {
     }
 
     @Override
-    public void addGame(Game game) throws DAOException {
+    public void addGame(Game game) throws DAOException, BeanException {
         Connection connexion = null;
         PreparedStatement preparedStatement;
 
@@ -42,7 +42,9 @@ public class GameDAODB implements GameDAO {
             connexion = daoFactory.getConnection();
             preparedStatement = connexion.prepareStatement("INSERT INTO games (user_id, won, score, date) VALUES(?, ?, ?, ?);");
             setPreparedStatement(game, preparedStatement);
-            preparedStatement.executeUpdate();
+
+            if (preparedStatement.executeUpdate() == 0)
+                throw new BeanException("There is a problem with the request");
         } catch (SQLException e) {
             try {
                 if (connexion != null) {
