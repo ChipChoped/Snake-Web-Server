@@ -11,6 +11,7 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.security.NoSuchAlgorithmException;
+import java.util.Base64;
 
 @Path("/user")
 public class UserAPI {
@@ -23,7 +24,11 @@ public class UserAPI {
             if (UserService.doLoginsExist(logins)) {
                 UserIDDTO userID = UserService.getUserID(logins.getUsername());
                 UserService.updateOnline(userID, true);
-                return Response.status(Response.Status.OK).entity(userID).build();
+
+                String valueToEncode = logins.getUsername() + ":" + logins.getPassword();
+                String token =  "Basic " + Base64.getEncoder().encodeToString(valueToEncode.getBytes());
+
+                return Response.status(Response.Status.OK).entity(userID).header("Authorization", token).build();
             }
             else throw new BeanException("Username or/and password are wrong");
         }
